@@ -1,0 +1,5 @@
+thingpulse/ESP8266 and ESP32 OLED driver for SSD1306 displays
+adafruit/DHT sensor library
+tzapu/WiFiManager
+adafruit/Adafruit Unified Sensor
+bblanchon/ArduinoJson
