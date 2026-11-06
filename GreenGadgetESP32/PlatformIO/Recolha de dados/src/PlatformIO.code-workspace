@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"name": "Recolha de dados",
+			"path": ".."
+		},
+		{
+			"name": "Rega",
+			"path": "../../../../../../OneDrive/Documentos/PlatformIO/Projects/Rega"
+		}
+	],
+	"settings": {}
+}

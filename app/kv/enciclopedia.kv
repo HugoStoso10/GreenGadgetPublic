@@ -1,0 +1,66 @@
+<enciclopedia>:
+    FloatLayout:
+
+        MDIconButton:
+            icon: "arrow-left"
+            pos_hint: {"x": 0.02, "top": 0.98}
+            theme_icon_color: "Custom"
+            icon_color: 0.49, 0.77, 0.50, 1
+            on_release: root.voltar_home()
+
+        Image:
+            source: "extras/LogoFinal.png"
+            size_hint: None, None
+            size: "120dp", "60dp"
+            pos_hint: {"center_x": 0.5, "top": 0.995}
+            allow_stretch: True
+            keep_ratio: True
+
+        MDLabel:
+            text: "Enciclopédia de plantas"
+            font_name: "extras/Montserrat-Bold.ttf"
+            font_size: "21sp"
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: 0.49, 0.77, 0.50, 1
+            size_hint: 0.9, None
+            height: "38dp"
+            pos_hint: {"center_x": 0.5, "top": 0.88}
+
+        ScrollView:
+            size_hint: 1, None
+            height: root.height - dp(155)
+            pos_hint: {"x": 0, "top": 0.81}
+            do_scroll_x: False
+
+            GridLayout:
+                id: plants_grid
+                cols: 1
+                spacing: dp(10)
+                padding: dp(16)
+                size_hint_y: None
+                height: self.minimum_height
+
+        MDLabel:
+            id: estado
+            text: "A carregar espécies..."
+            font_name: "extras/Montserrat-VariableFont_wght.ttf"
+            font_size: "14sp"
+            halign: "center"
+            valign: "middle"
+            theme_text_color: "Custom"
+            text_color: 0.35, 0.40, 0.35, 1
+            size_hint: 0.9, None
+            height: "60dp"
+            pos_hint: {"center_x": 0.5, "center_y": 0.48}
+
+        MDLabel:
+            text: "Desliza para a direita para voltar às plantas"
+            font_name: "extras/Montserrat-VariableFont_wght.ttf"
+            font_size: "11sp"
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: 0.49, 0.77, 0.50, 0.8
+            size_hint: 0.9, None
+            height: "22dp"
+            pos_hint: {"center_x": 0.5, "y": 0.01}

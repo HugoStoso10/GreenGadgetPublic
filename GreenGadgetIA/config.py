@@ -1,0 +1,18 @@
+INTERVALO_SEGUNDOS = 10
+
+IDADE_MAXIMA_LEITURA_MINUTOS = 30
+
+LIMIAR_REGA = 70
+
+COOLDOWN_PADRAO_HORAS = 4
+
+# Enquanto estiver True, não envia comandos reais à API.
+MODO_SIMULACAO = False
+MODO_TESTE = True
+
+# Configurações temporárias de teste
+TESTE_COOLDOWN_HORAS = 0
+TESTE_LIMIAR_REGA = 50
+
+API_BASE_URL = ""
+API_TIMEOUT = 10

@@ -1,0 +1,72 @@
+<RegisterLogin>:
+    FloatLayout:
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "5dp"
+            adaptive_height: True
+            size_hint_x: 0.7
+            pos_hint: {"center_x": .5, "center_y": .75}
+
+            #Logo
+            Image:
+                id: Logo
+                opacity: 0
+                source: "extras/LogoFinal.png"
+                size_hint_y: None
+                height: "140dp"
+                allow_stretch: True
+                keep_ratio: True
+
+            #Texto: Bem vindo
+            MDLabel:
+                id: Texto
+                opacity: 0
+                text: "Bem Vindo"
+                halign: "center"
+                font_name: "extras/Montserrat-VariableFont_wght.ttf"
+                theme_text_color: "Custom"
+                text_color: 0.49, 0.77, 0.50, 1
+                font_style: "H5"
+
+        MDBoxLayout:
+            id: btn
+            opacity: 0
+            orientation: "vertical"
+            adaptive_height: True
+            spacing: "5dp"
+            size_hint_x: .7
+            pos_hint: {"center_x": .5, "center_y": .5}
+
+            MDRoundFlatButton:
+                text: "Login"
+                font_name: "extras/Montserrat-Bold.ttf"
+                size_hint_x: 1
+                line_color: 0.49, 0.77, 0.50, 1
+                text_color: 0.49, 0.77, 0.50, 1
+                md_bg_color: 1, 1, 1, 1
+
+                on_press:
+                    self.md_bg_color = (0.49, 0.77, 0.50, 1)
+                    self.text_color = (1,1,1,1)
+
+                on_release:
+                    self.md_bg_color = (1,1,1,1)
+                    self.text_color = (0.49, 0.77, 0.50, 1)
+                    root.mudar_login()
+
+            MDRoundFlatButton:
+                text: "Register"
+                font_name: "extras/Montserrat-Bold.ttf"
+                size_hint_x: 1
+                line_color: 0.49, 0.77, 0.50, 1
+                text_color: 0.49, 0.77, 0.50, 1
+                md_bg_color: 1, 1, 1, 1
+
+                on_press:
+                    self.md_bg_color = (0.49, 0.77, 0.50, 1)
+                    self.text_color = (1,1,1,1)
+
+                on_release:
+                    self.md_bg_color = (1,1,1,1)
+                    self.text_color = (0.49, 0.77, 0.50, 1)
+                    root.mudar_register()

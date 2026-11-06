@@ -1,0 +1,23 @@
+# ---- PlatformIO ----
+.pio/
+.pioenvs/
+.piolibdeps/
+.clang_complete
+.gcc-flags.json
+ 
+# ---- VS Code (específico do editor, não do projeto) ----
+.vscode/*
+!.vscode/extensions.json
+# (a exceção acima mantém a sugestão de extensões partilhada com a equipa,
+#  mas ignora configurações pessoais tipo launch.json, settings.json locais)
+ 
+# ---- Ficheiros de build/cache genéricos ----
+*.o
+*.obj
+*.elf
+*.bin
+*.map
+ 
+# ---- Ficheiros de sistema operativo ----
+.DS_Store
+Thumbs.db

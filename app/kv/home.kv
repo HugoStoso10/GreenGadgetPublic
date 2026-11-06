@@ -1,0 +1,86 @@
+
+<home>:
+    FloatLayout:
+
+        MDIconButton:
+            icon: "logout"
+            pos_hint: {"x": 0.02, "top": 0.98}
+            theme_icon_color: "Custom"
+            icon_color: 0.49, 0.77, 0.50, 1
+            on_release: root.logout()
+
+        Image:
+            source: "extras/LogoFinal.png"
+            size_hint: None, None
+            size: "120dp", "60dp"
+            pos_hint: {"center_x": 0.5, "top": 0.995}
+            allow_stretch: True
+            keep_ratio: True
+
+        MDIconButton:
+            icon: "book-open-page-variant-outline"
+            pos_hint: {"right": 0.88, "top": 0.98}
+            theme_icon_color: "Custom"
+            icon_color: 0.49, 0.77, 0.50, 1
+            on_release: root.abrir_enciclopedia()
+
+        MDIconButton:
+            icon: "plus"
+            pos_hint: {"right": 0.98, "top": 0.98}
+            theme_icon_color: "Custom"
+            icon_color: 0.49, 0.77, 0.50, 1
+            on_release: root.adicionar_dispositivo()
+
+        MDLabel:
+            text: "As minhas plantas"
+            font_name: "extras/Montserrat-Bold.ttf"
+            font_size: "22sp"
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: 0.49, 0.77, 0.50, 1
+            size_hint: 0.90, None
+            height: dp(38)
+            pos_hint: {"center_x": 0.5, "top": 0.88}
+
+        ScrollView:
+            id: scroll_plantas
+            size_hint: 1, None
+            height: root.height - dp(165)
+            pos_hint: {"x": 0, "top": 0.81}
+            do_scroll_x: False
+            bar_width: dp(3)
+
+            GridLayout:
+                id: devices_grid
+                cols: 2
+                spacing: dp(12)
+                padding: dp(10)
+                size_hint: 1, None
+                height: self.minimum_height
+                row_default_height: dp(122)
+                row_force_default: True
+
+        MDLabel:
+            id: estado_vazio
+            text: ""
+            opacity: 0
+            font_name: "extras/Montserrat-VariableFont_wght.ttf"
+            font_size: "13sp"
+            halign: "center"
+            valign: "middle"
+            theme_text_color: "Custom"
+            text_color: 0.35, 0.40, 0.35, 1
+            size_hint: 0.88, None
+            height: dp(70)
+            pos_hint: {"center_x": 0.5, "center_y": 0.48}
+
+        MDLabel:
+            text: "Desliza para a esquerda para abrir a enciclopédia"
+            font_name: "extras/Montserrat-VariableFont_wght.ttf"
+            font_size: "10sp"
+            halign: "center"
+            theme_text_color: "Custom"
+            text_color: 0.49, 0.77, 0.50, 0.8
+            size_hint: 0.92, None
+            height: dp(22)
+            pos_hint: {"center_x": 0.5, "y": 0.01}

@@ -1,0 +1,127 @@
+name: Build GreenGadget Android
+on:
+  workflow_dispatch:
+jobs:
+  build-android:
+    name: Build APK
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            git \
+            zip \
+            unzip \
+            curl \
+            openjdk-17-jdk \
+            autoconf \
+            automake \
+            libtool \
+            pkg-config \
+            zlib1g-dev \
+            libncurses5-dev \
+            libncursesw5-dev \
+            cmake \
+            libffi-dev \
+            libssl-dev
+
+      - name: Install Buildozer
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "Cython<3.4"
+          python -m pip install buildozer
+
+      - name: Install Android SDK
+        run: |
+          SDK="$HOME/.buildozer/android/platform/android-sdk"
+          mkdir -p "$SDK/cmdline-tools"
+          cd "$SDK/cmdline-tools"
+          curl -L \
+            -o commandlinetools.zip \
+            https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+          unzip -q commandlinetools.zip
+          rm commandlinetools.zip
+          mv cmdline-tools latest
+          mkdir -p "$SDK/tools/bin"
+          ln -sf \
+            "$SDK/cmdline-tools/latest/bin/sdkmanager" \
+            "$SDK/tools/bin/sdkmanager"
+          ln -sf \
+            "$SDK/cmdline-tools/latest/bin/avdmanager" \
+            "$SDK/tools/bin/avdmanager"
+          echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+          echo "ANDROIDSDK=$SDK" >> "$GITHUB_ENV"
+          echo "$SDK/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          echo "$SDK/tools/bin" >> "$GITHUB_PATH"
+
+      - name: Accept Android SDK licenses
+        run: |
+          SDK="$HOME/.buildozer/android/platform/android-sdk"
+          yes | "$SDK/tools/bin/sdkmanager" \
+            --sdk_root="$SDK" \
+            --licenses
+
+      - name: Install Android SDK components
+        run: |
+          SDK="$HOME/.buildozer/android/platform/android-sdk"
+          "$SDK/tools/bin/sdkmanager" \
+            --sdk_root="$SDK" \
+            "platform-tools" \
+            "platforms;android-35" \
+            "build-tools;37.0.0"
+
+      # ---------------------------------------------------------
+      # NOVO: cache dos downloads/recipes do Buildozer/p4a
+      # Evita voltar a descarregar freetype, openssl, etc. em
+      # builds seguintes, e reduz a exposição a falhas de rede
+      # de servidores externos como o savannah.gnu.org.
+      # ---------------------------------------------------------
+      - name: Cache Buildozer global directory
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.buildozer
+          key: buildozer-global-${{ hashFiles('GreenGadgetAPP/buildozer.spec') }}
+          restore-keys: |
+            buildozer-global-
+
+      - name: Cache Buildozer local directory
+        uses: actions/cache@v4
+        with:
+          path: |
+            GreenGadgetAPP/.buildozer
+          key: buildozer-local-${{ hashFiles('GreenGadgetAPP/buildozer.spec') }}
+          restore-keys: |
+            buildozer-local-
+
+      - name: Clean previous Buildozer build artifacts (mantém cache de downloads)
+        working-directory: GreenGadgetAPP
+        run: |
+          buildozer android clean || true
+
+      # ---------------------------------------------------------
+      # NOVO: retry automático em caso de falha (ex: 504/502 de
+      # servidores externos). Tenta até 3 vezes antes de desistir.
+      # ---------------------------------------------------------
+      - name: Build APK (com retry automático)
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 60
+          max_attempts: 3
+          retry_wait_seconds: 30
+          command: cd GreenGadgetAPP && buildozer -v android debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: GreenGadget-APK
+          path: GreenGadgetAPP/bin/*.apk
