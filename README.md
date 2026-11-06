@@ -1,5 +1,8 @@
 # GreenGadget
 
+youtube link a mostrar funcionamento do projeto | youtube link showing how the project works
+https://www.youtube.com/watch?v=zboLP2fLA8c&feature=youtu.be
+
 **Projeto académico | Academic Project**
 
 ---
